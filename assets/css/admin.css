@@ -1,0 +1,139 @@
+.bundle-fields  {
+	margin-top: 20px;
+}
+.bundle-fields .field {
+    display: block;
+	margin-bottom: 20px;
+}
+.bundle-fields .field span {
+	display: block;
+}
+.bundle-fields .field label {
+    display: block;
+    margin: 10px 2px;
+    font-size: 14px;
+}
+.bundle-fields .field input[type=text],
+.bundle-fields .field input[type=number],
+.bundle-fields .field input[type=email],
+.bundle-fields .field input[type=tel],
+.bundle-fields .field input[type=phone],
+.bundle-fields .field textarea,
+.bundle-fields .field select {
+    width: 100%;
+}
+.bundle-fields .field input.upload-field {}
+.bundle-fields .field a.upload {}
+
+.bundle-fields #offers {
+    border: none;
+    border-collapse: collapse;
+}
+.bundle-fields #offers tr {}
+.bundle-fields #offers tbody tr:first-child {
+	background-color: #E0E0E0;
+}
+.bundle-fields #offers tr td,
+.bundle-fields #offers tr th {
+    border: 1px solid #DDD;
+    padding: 10px 5px;
+}
+.bundle-fields #offers select#type {
+    display: inline-block;
+    width: 70%;
+}
+.bundle-fields #offers select#type-product {
+    display: inline-block;
+    width: 25%;
+}
+.bundle-fields .field .templates .box {
+    width: 33%;
+    cursor: pointer;
+    height: 220px;
+    display: inline-block;
+    background-image: none;
+	
+    background-color: #FFF;
+    background-size: 100% auto;
+    border: 5px solid #FFF;
+    box-sizing: border-box;
+	background-repeat: no-repeat;
+	
+    background-position: center;
+}
+.bundle-fields .field .templates .box.one {
+	background-image: url(../img/template1.png);
+}
+.bundle-fields .field .templates .box.two {
+	background-image: url(../img/template2.png);
+}
+.bundle-fields .field .templates .box.three {
+	background-image: url(../img/template3.png);
+}
+.bundle-fields .field .templates .box:hover,
+.bundle-fields .field .templates .box.active {
+	border: 5px solid #767676;
+}
+.bundle-fields .field .templates .box::before {
+	content: attr(data-label);
+	text-align: center;
+	display: block;
+	font-size: 17px;
+	padding: 10px;
+	display: none;
+}
+.clearfix {clear: both;}
+
+#menu-posts-woo-bundles div.wp-menu-image:before,
+#menu-posts-woo-bundles div.wp-menu-image:after {
+	font-family: WooCommerce!important;
+	content: "\e03d";
+	font-size: 1.3em!important;
+}
+#menu-posts-woo-bundles div.wp-menu-image:after {
+    position: absolute;
+    top: 17px;
+    left: 18px;
+    font-size: 13px !important;
+}
+.bundle-fields #products {}
+.sortitem{
+	padding: 5px;
+	border: 1px solid #ccc;
+	padding-left:20px;
+	border-radius: 5px;
+	margin-bottom: 5px;
+}
+.sortitem .close {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    bottom: 0;
+    font-size: 20px;
+    line-height: 24px;
+    color: #DDD;
+    cursor: pointer;
+}
+.sortitem .close:hover {
+    color: #000;
+}
+.sortitem .sorthandle{
+	position: absolute;
+	top: 5px;
+	bottom: 5px;
+	left: 3px;
+	width: 8px;
+	display: block;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAB3RJTUUH3wIDBycZ/Cj09AAAAAlwSFlzAAALEgAACxIB0t1+/AAAAARnQU1BAACxjwv8YQUAAAAWSURBVHjaY2DABhoaGupBGMRmYiAEAKo2BAFbROu9AAAAAElFTkSuQmCC');
+}
+.sortitem:hover .sorthandle{
+	display: block;
+}
+.sortitem small {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+	background: #DBDBDB;
+	padding: 2px 5px;
+	font-size: 0.7em;
+}
