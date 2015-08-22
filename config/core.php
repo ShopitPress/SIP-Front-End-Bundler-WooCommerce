@@ -30,7 +30,7 @@ class Core {
 		
 		require_once( SIP_FEBWC_DIR . 'config/require.php' );
 		
-		$this->posttype = "front-end-bundler";
+		$this->posttype = "sip-bundles";
 	}
 
 }

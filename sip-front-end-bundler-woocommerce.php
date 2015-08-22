@@ -17,16 +17,14 @@
  * Text Domain:       WB
  * Domain Path:       /languages
  * Requires:					PHP5, WooCommerce Plugin
- * Last updated on:		20-08-2015
+ * Last updated on:		22-08-2015
 */
-
-if ( !defined( 'ABSPATH' ) ) { 
-    exit; // Exit if accessed directly
-}
+if(!function_exists('add_action'))
+	exit;
 
 global $wpdb;
 
-// Define plugin constants
+
 define( 'SIP_FEBWC_NAME', 'SIP Front End Bundler for WooCommerce' );
 define( 'SIP_FEBWC_VERSION', '1.0.0' );
 define( 'SIP_FEBWC_PLUGIN_SLUG', 'sip-front-end-bundler-woocommerce' );
@@ -38,19 +36,24 @@ define(	'SIP_FEBWC_CURRENT_URL', get_bloginfo('url') . $_SERVER['REQUEST_URI']);
 define(	'SIP_FEBWC_PREFIX', $wpdb->prefix . "woo_front_end_bundler_");
 define( 'SIP_FEBWC_PLUGIN_PURCHASE_URL', 'https://shopitpress.com/plugins/sip-front-end-bundler-woocommerce/' );
 
+// register_activation_hook(__FILE__, array('WooBundler', 'plugin_activation'));
+// register_deactivation_hook(__FILE__, array('WooBundler', 'plugin_deactivation'));
+
+		
+
+
 /**
- * Registers credit/affiliate link options
+ * registers credit/affiliate link options
  *
- * @since 1.0.0
  *
+ * @since      1.0.1
  */
-add_action( 'admin_init', 'sip_febwc_affiliate_register_admin_settings' );
 function sip_febwc_affiliate_register_admin_settings() {
 	register_setting( 'sip-febwc-affiliate-settings-group', 'sip-febwc-affiliate-check-box' );
 	register_setting( 'sip-febwc-affiliate-settings-group', 'sip-febwc-affiliate-radio' );
 	register_setting( 'sip-febwc-affiliate-settings-group', 'sip-febwc-affiliate-affiliate-username' );
 }
-
+add_action( 'admin_init', 'sip_febwc_affiliate_register_admin_settings' );
 
 register_deactivation_hook( __FILE__, array( 'Sip_Front_End_Bundler_WC_Admin' , 'sip_febwc_deactivate') );
 

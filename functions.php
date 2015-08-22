@@ -1,16 +1,22 @@
 <?php
-
- // It will display the default template of SIP Front End Bundler for WooCommerce
+/**
+ * It will display the default template of SIP Front End Bundler for WooCommerce
+ *
+ *
+ * @since      1.0.0
+ *
+ * @package    Sip_Front_End_Bundler_Woocommerce
+ */
 
 /**
- * Set default time zone 
+ * Default time zone 
  *
  * @since      1.0.0
  */
 date_default_timezone_set("America/New_York");
 
 /**
- * Load the text domain
+ * load the text domain
  *
  * @since      1.0.0
  */
@@ -29,7 +35,7 @@ function sip_febwc_init_function() {
 	
 	// POST TYPES INSTANCE
 	require_once( SIP_FEBWC_DIR . 'classes/class.type.php' );
-	new Type( $core->posttype, "Front End Bundler", array(), array( "public" => true, "show_in_menu" => true, "show_in_nav_menus" => true, "show_in_admin_bar" => true, "capability_type" => "post", "supports" => array("title") ), array( "name_admin_bar" => "Bundle", "all_items" => "All Bundles", "add_new_item" => "Add New Bundle", "edit_item" => "Edit Bundle", "new_item" => "New Bundle", "view_item" => "View Bundle", "search_items" => "Search Bundles", "not_found" => "No Bundle found", "not_found_in_trash" => "No Bundle found in trash", "parent_item_colon" => "Parent Bundle" ) );
+	new Type( $core->posttype, "Bundles", array(), array( "public" => true, "show_in_menu" => true, "show_in_nav_menus" => true, "show_in_admin_bar" => true, "capability_type" => "post", "supports" => array("title") ), array( "name_admin_bar" => "Bundle", "all_items" => "All Bundles", "add_new_item" => "Add New Bundle", "edit_item" => "Edit Bundle", "new_item" => "New Bundle", "view_item" => "View Bundle", "search_items" => "Search Bundles", "not_found" => "No Bundle found", "not_found_in_trash" => "No Bundle found in trash", "parent_item_colon" => "Parent Bundle") );
 }
 
 /**
@@ -281,11 +287,10 @@ function sip_febwc_bundles_add_meta_box() {
 	add_meta_box( 'bundle-fields-design', __( 'Design', 'WB' ), 'bundles_callback_meta_box', $core->posttype, 'normal', 'high', array('type' => 'design') );
 	add_meta_box( 'bundle-fields-text', __( 'Text', 'WB' ), 'bundles_callback_meta_box', $core->posttype, 'normal', 'high', array('type' => 'text') );
 	add_meta_box( 'bundle-fields-products-add', __( 'Add Products', 'WB' ), 'bundles_callback_meta_box', $core->posttype, 'side', 'core', array('type' => 'products-add') );
-	//add_meta_box( 'bundle-fields-quantity', __( 'Allow Quantity', 'WB' ), 'bundles_callback_meta_box', $core->posttype, 'side', 'core', array('type' => 'quantity') );
-	add_meta_box( 'bundle-fields-setting', __( 'Setting', 'WB' ), 'bundles_callback_meta_box', $core->posttype, 'normal', 'high', array('type' => 'setting') );
-	add_meta_box( 'bundle-fields-offers', __( 'Offers', 'WB' ), 'bundles_callback_meta_box', $core->posttype, 'normal', 'high', array('type' => 'offers') );
-	
+	add_meta_box( 'bundle-fields-setting', __( 'Setting', 'WB' ), 'bundles_callback_meta_box', $core->posttype, 'normal', 'high', array('type' => 'setting') );	
 	add_meta_box( 'woobundler-product-fields', __( 'WooBundler', 'WB' ), 'bundles_callback_meta_box', 'product', 'normal', 'high', array('type' => 'woocommerce') );
+	add_meta_box( 'bundle-fields-offers', __( 'Offers', 'WB' ), 'bundles_callback_meta_box', $core->posttype, 'normal', 'high', array('type' => 'offers') );
+
 }
 add_action( 'add_meta_boxes', 'sip_febwc_bundles_add_meta_box' );
 
@@ -528,8 +533,11 @@ function bundles_callback_meta_box( $post, $type ) {
  * @since      1.0.0
  */
 function bundles_save_meta_box( $postid ) {
+
+	
 	if( isset($_POST['bundle']) ) {
-		
+	
+
 		global $core;
 		
 		if( isset($_POST['bundle']['offers']) ) {
@@ -559,17 +567,27 @@ function bundles_save_meta_box( $postid ) {
 				$coupon = wp_insert_post( $args, $wp_error );
 				add_action('save_post', 'bundles_save_meta_box');
 				
+
+
 				if( $coupon ) {
 					
 					$_POST['bundle']['offers'][$key]['coupon'] = $coupon;
 					
 					update_post_meta( $coupon, 'bundleid', $postid );
-					update_post_meta( $coupon, 'discount_type', ( (isset($_POST['bundle']['offers'][$key]['discount-type']) && $_POST['bundle']['offers'][$key]['discount-type'] == 'amount') ? 'fixed_cart' : 'percent' ) );
+					update_post_meta( $coupon, 'product_ids', $bundle['products'] );
+
+					update_post_meta( $coupon, 'discount_type', ( (isset($_POST['bundle']['offers'][$key]['discount-type']) && $_POST['bundle']['offers'][$key]['discount-type'] == 'amount') ? 'fixed_cart' : 'percent_product' ) );
 					update_post_meta( $coupon, 'coupon_amount', $_POST['bundle']['offers'][$key]['discount'] );
 				}
 			}
 		}
 		update_post_meta( $postid, 'bundle', $_POST['bundle'] );
+		$bundle = get_post_meta( $postid, 'bundle', true );
+
+		if( $coupon ) {
+			update_post_meta( $coupon, 'product_ids', $bundle['products'] );
+			update_post_meta( $coupon, 'sip_wc_bundle_coupon', 'yes' );
+		}
 	}
 }
 add_action( 'save_post', 'bundles_save_meta_box' );
@@ -709,3 +727,36 @@ function function_do_script_errors( $fields ) {
 	
 	echo '<script>var wooerrors = '.json_encode( $errors ).';</script>';
 }
+
+
+add_filter( 'woocommerce_coupon_is_valid', 'sip_coupon_is_valid' , 10, 2 );
+
+function sip_coupon_is_valid( $valid, $coupon ) {
+		global $woocommerce;
+
+		$product_ids = $coupon->product_ids;
+
+		if ( 'yes' == get_post_meta( $coupon->id, 'sip_wc_bundle_coupon', true ) ) {
+			foreach ( $woocommerce->cart->cart_contents as $key => $value ) {
+				if ( in_array( $value['product_id'], $product_ids ) ) {
+					$id_array_key = array_search( $value['product_id'], $product_ids );
+					unset( $product_ids[ $id_array_key ] );
+				}
+			}
+			
+			if ( ! empty( $product_ids ) ) {
+				return false;
+			}
+		}
+
+		return $valid;
+	}
+
+	/**
+  * Modify the coupon errors:
+  */
+	add_filter( 'woocommerce_coupon_error', 'wpq_coupon_error', 10, 2 );
+
+	function wpq_coupon_error( $err, $err_code ) {	
+    return ( '103' == $err_code ) ? '' : $err;
+	}
