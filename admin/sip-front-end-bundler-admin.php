@@ -69,7 +69,7 @@ class Sip_Front_End_Bundler_WC_Admin {
               <div class="text"><?php
                 _e( 'It\'s time to upgrade your', 'front-end-bundler' ); ?> <strong><?php echo $plugin_info['Name']; ?> plugin</strong> <?php _e( 'to', 'front-end-bundler' ); ?> <strong>PRO</strong> <?php _e( 'version!', 'front-end-bundler' ); ?><br />
                 <span><?php _e( 'Extend standard plugin functionality with new great options.', 'front-end-bundler' ); ?></span>
-                <?php printf(__('| <a href="%1$s">Dismiss this notice</a>'), 'admin.php?page=sip-bundles-settings&sip_febwc_nag_ignore=0'); ?>              
+                <?php printf(__('| <a href="%1$s">Dismiss this notice</a>'), 'admin.php?page=sip-bundler-settings&sip_febwc_nag_ignore=0'); ?>              
               </div>
               <div class="button_div">
                 <a class="button" target="_blank" href="https://shopitpress.com/plugins/<?php echo SIP_FEBWC_PLUGIN_SLUG ; ?>/?utm_source=wordpress.org&amp;utm_medium=SIP-panel&amp;utm_content=v<?php echo SIP_FEBWC_VERSION; ?>&amp;utm_campaign=<?php echo SIP_FEBWC_UTM_CAMPAIGN ; ?>"><?php _e( 'Learn More', 'front-end-bundler' ); ?></a>
@@ -105,7 +105,7 @@ class Sip_Front_End_Bundler_WC_Admin {
    */
   public function sip_febwc_action_links( $links ) {
     $plugin_links = array(
-      '<a href="' . admin_url( 'admin.php?page=sip-bundles-settings' ) . '">' . __( 'Settings', 'front-end-bundler' ) . '</a>'
+      '<a href="' . admin_url( 'admin.php?page=sip-bundler-settings' ) . '">' . __( 'Settings', 'front-end-bundler' ) . '</a>'
     );
     $plugin_links[] = '<a target="_blank" href="https://shopitpress.com/docs/' .SIP_FEBWC_PLUGIN_SLUG. '/?utm_source=wordpress.org&utm_medium=SIP-panel&utm_content=v'. SIP_FEBWC_VERSION .'&utm_campaign='.SIP_FEBWC_UTM_CAMPAIGN.'">' . __( 'Docs', 'front-end-bundler' ) . '</a>';
     
@@ -193,7 +193,7 @@ class Sip_Front_End_Bundler_WC_Admin {
     $parent = $args['parent_page'];
 
     if ( ! empty( $parent ) ) {
-      add_submenu_page( $parent , 'Front End Bundler', 'Front End Bundler', 'manage_options', 'sip-bundles-settings', array( $this, 'sip_febwc_settings_page_ui' ) );        
+      add_submenu_page( $parent , 'Front End Bundler', 'Front End Bundler', 'manage_options', 'sip-bundler-settings', array( $this, 'sip_febwc_settings_page_ui' ) );        
     } else {
       add_menu_page( $args['page_title'], $args['menu_title'], $args['capability'], $args['page'], array( $this, 'sip_febwc_admin_menu_ui' ), NULL , 62.25 );
     }
@@ -262,8 +262,8 @@ class Sip_Front_End_Bundler_WC_Admin {
 
     <div class="sip-container">
       <h2 class="nav-tab-wrapper">
-        <a class="nav-tab<?php if ( !isset( $_GET['action'] ) ) echo ' nav-tab-active'; ?>" href="admin.php?page=sip-bundles-settings"><?php _e( 'Settings', 'front-end-bundler' ); ?></a>
-        <a class="nav-tab<?php if ( isset( $_GET['action'] ) && 'help' == $_GET['action'] ) echo ' nav-tab-active'; ?>" href="admin.php?page=sip-bundles-settings&amp;action=help"><?php _e( 'Help', 'front-end-bundler' ); ?></a>
+        <a class="nav-tab<?php if ( !isset( $_GET['action'] ) ) echo ' nav-tab-active'; ?>" href="admin.php?page=sip-bundler-settings"><?php _e( 'Settings', 'front-end-bundler' ); ?></a>
+        <a class="nav-tab<?php if ( isset( $_GET['action'] ) && 'help' == $_GET['action'] ) echo ' nav-tab-active'; ?>" href="admin.php?page=sip-bundler-settings&amp;action=help"><?php _e( 'Help', 'front-end-bundler' ); ?></a>
       </h2>
       <?php
         if ( !isset( $_GET['action'] ) ) { 

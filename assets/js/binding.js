@@ -1,5 +1,4 @@
 jQuery(function($) {
-
 	var amount = 0;
 	var total_qty = 0;
 	var discountedprice = 0;

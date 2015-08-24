@@ -45,7 +45,9 @@ function sip_febwc_init_function() {
  */
 add_action('wp_loaded', 'sip_febwc_loaded_function');
 function sip_febwc_loaded_function() {
+	
 	global $core;
+	
 	if( isset($_POST) && isset($_POST['nonce']) ) {
 		if( wp_verify_nonce($_POST['nonce'], 'woobundler-add-to-cart') ) {
 			if( isset($_POST['bundler']) && isset($_POST['bundler']['id']) ) {
@@ -101,7 +103,7 @@ function sip_febwc_loaded_function() {
 										
 										if( isset($offer["override"]) && $offer["override"] != "" && $discounts["override"]["percent"] < $offer["discount"] ) {
 											$discounts["override"]["percent"] = intval($offer["discount"]);
-											$discounts["override"]["coupon"] = $offer["coupon"];
+											$discounts["override"]["coupon"] 	= $offer["coupon"];
 										}
 
 										//array_push($coupons, $offer["coupon"]);
@@ -113,8 +115,8 @@ function sip_febwc_loaded_function() {
 										$discounts["products"] = intval($offer["discount"]);
 										
 										if( isset($offer["override"]) && $offer["override"] != "" && $discounts["override"]["percent"] < $offer["discount"] ) {
-											$discounts["override"]["percent"] = intval($offer["discount"]);
-											$discounts["override"]["coupon"] = $offer["coupon"];
+											$discounts["override"]["percent"]	= intval($offer["discount"]);
+											$discounts["override"]["coupon"]	= $offer["coupon"];
 										}
 										
 										//array_push($coupons, $offer["coupon"]);
@@ -151,23 +153,25 @@ function sip_febwc_loaded_function() {
 						$woocommerce->cart->add_discount($post_coupon->post_title);
 					}
 				}
-				
 				if( isset($bundler["redirect"]) && !empty($bundler["redirect"]) ) {
-					wp_redirect( urldecode($bundler["redirect"]), true );
+					$url = $bundler["redirect"]  ;		
+					$url = utf8_decode(urldecode($url));
+					wp_redirect( $url , 301 ); exit;
 				}
 			}
 		}
 	}
 }
 
+
 /**
- * to hide coupn from woocommerce check cart page 
+ * Hide coupon from woocommerce check cart page 
  *
  * @since      1.0.0
  */
 add_filter( 'woocommerce_cart_totals_coupon_label', 'sip_febwc_hide_coupon' );
 function sip_febwc_hide_coupon() {
-  echo 'Discount Applied';
+  echo "Discount Applied";
 }
 
 /**
@@ -182,14 +186,15 @@ function sip_febwc_action_woocommerce_check_cart_items() {
 //add_action( 'woocommerce_check_cart_items', 'sip_febwc_action_woocommerce_check_cart_items', 10);
 
 /**
- * To perferom an acction on shortcode 
+ * To perferom an action on shortcode 
  *
  * @since      1.0.0
  * @return 		 string if template or ID does not exist
  */
-add_shortcode('woobundler', 'sip_febwc_woobundler_shortcode');
+add_shortcode('sip_front_end_bundler', 'sip_febwc_woobundler_shortcode');
 function sip_febwc_woobundler_shortcode( $atts ) {
-	$atts = shortcode_atts( array("id" => -1), $atts, "woobundler" );
+	
+	$atts = shortcode_atts( array("id" => -1), $atts, "sip_front_end_bundler" );
 	extract($atts);
 	
 	if( !empty($id) ) {
@@ -217,7 +222,7 @@ function sip_febwc_woobundler_shortcode( $atts ) {
 }
 
 /**
- * to make chield menue at admin page
+ * Make child menue at admin page
  *
  * @since      1.0.0
  */
@@ -281,6 +286,7 @@ function option_exists( $name ) {
  *
  * @since      1.0.0
  */
+add_action( 'add_meta_boxes', 'sip_febwc_bundles_add_meta_box' );
 function sip_febwc_bundles_add_meta_box() {
 	global $core;
 	
@@ -290,10 +296,7 @@ function sip_febwc_bundles_add_meta_box() {
 	add_meta_box( 'bundle-fields-setting', __( 'Setting', 'WB' ), 'bundles_callback_meta_box', $core->posttype, 'normal', 'high', array('type' => 'setting') );	
 	add_meta_box( 'woobundler-product-fields', __( 'WooBundler', 'WB' ), 'bundles_callback_meta_box', 'product', 'normal', 'high', array('type' => 'woocommerce') );
 	add_meta_box( 'bundle-fields-offers', __( 'Offers', 'WB' ), 'bundles_callback_meta_box', $core->posttype, 'normal', 'high', array('type' => 'offers') );
-
 }
-add_action( 'add_meta_boxes', 'sip_febwc_bundles_add_meta_box' );
-
 /**
  * callback meta box
  *
@@ -304,6 +307,7 @@ function bundles_callback_meta_box( $post, $type ) {
 	$bundle = get_post_meta( $post->ID, 'bundle', true );
 	
 	switch($type) {
+		
 		case "design": ?>
 			<div class="bundle-fields">
 				<div class="field">
@@ -325,6 +329,7 @@ function bundles_callback_meta_box( $post, $type ) {
 				</div>
 			</div>
 		<?php break; ?>
+		
 		<?php case "text": ?>
 			<div class="bundle-fields">
 				<div class="field">
@@ -343,13 +348,16 @@ function bundles_callback_meta_box( $post, $type ) {
 					<label>Out of Stock</label>
 					<input type="text" name="bundle[outstock]" value="<?php echo ( (isset($bundle["outstock"]) && !empty($bundle["outstock"])) ? $bundle["outstock"] : "" ); ?>" />
 				</div>
-				<div class="field">
+
+				<div class="field" onclick="alert('This feature is available only in PRO version');">
 					<label>Combination Error Text</label>
 					<small>You can bind: [product-name],[product-price],[product-sku],[product-description],[product-id]</small>
-					<textarea name="bundle[combination-error]"><?php echo ( (isset($bundle["combination-error"]) && !empty($bundle["combination-error"])) ? $bundle["combination-error"] : "Sorry, the combination chosen for the product \"[product-name]\" is unavailable. Please choose a different combination." ); ?></textarea>
+					<textarea name="bundle[combination-error]" disabled ><?php echo ( (isset($bundle["combination-error"]) && !empty($bundle["combination-error"])) ? $bundle["combination-error"] : "Sorry, the combination chosen for the product \"[product-name]\" is unavailable. Please choose a different combination." ); ?></textarea>
 				</div>
+
 			</div>
 		<?php break; ?>
+		
 		<?php case "products-add":
 			?>
 			<script>
@@ -391,10 +399,22 @@ function bundles_callback_meta_box( $post, $type ) {
 				</div>
 			</div>
 		<?php break; ?>
+		
 		<?php case "setting": ?>
 			<div class="bundle-fields">
+				<div class="field" onclick="alert('This feature is available only in PRO version');">
+					<label>Define quantity of items per bundle</label>
+					<label><input style="display: inline; width: 10%;" type="number" name="bundle[min-items]" value="1" disabled /> MIN</label>
+					<label><input style="display: inline; width: 10%;" type="number" name="bundle[max-items]" value="1" disabled/> MAX</label>
+				</div>
 				<div class="field">
 					<label><input type="checkbox" name="bundle[display-product-prices]" <?php echo ( (isset($bundle["display-product-prices"])) ? "checked" : "" ); ?> /> Display Product Prices</label>
+				</div>
+				<div class="field" onclick="alert('This feature is available only in PRO version');">
+					<label><input disabled type="checkbox" name="bundle[allow-bundle-quantity]" /> Allow quantity input</label>
+				</div>
+				<div class="field" onclick="alert('This feature is available only in PRO version');">
+					<label><input disabled type="checkbox" name="bundle[allow-product-quantity]" /> Allow per product quantity input</label>
 				</div>
 				<div class="field">
 					<label><input type="checkbox" name="bundle[redirect]" <?php echo ( (isset($bundle["redirect"])) ? "checked" : "" ); ?> /> Redirect to checkout after selection</label>
@@ -407,8 +427,10 @@ function bundles_callback_meta_box( $post, $type ) {
 					<label>Custom CSS</label>
 					<textarea name="bundle[customcss]"><?php echo ( (isset($bundle["customcss"])) ? $bundle["customcss"] : "" ); ?></textarea>
 				</div>
-			</div>
+			</div>		
 		<?php break; ?>
+
+
 		<?php case "offers": ?>
 			<div class="bundle-fields">
 				<div class="field">
@@ -539,7 +561,8 @@ function bundles_save_meta_box( $postid ) {
 	
 
 		global $core;
-		
+		update_post_meta( $postid, 'bundle', $_POST['bundle'] );
+		$bundle = get_post_meta( $postid, 'bundle', true );
 		if( isset($_POST['bundle']['offers']) ) {
 			$count = -1;
 			
@@ -566,28 +589,20 @@ function bundles_save_meta_box( $postid ) {
 				remove_action('save_post', 'bundles_save_meta_box');
 				$coupon = wp_insert_post( $args, $wp_error );
 				add_action('save_post', 'bundles_save_meta_box');
-				
-
 
 				if( $coupon ) {
 					
 					$_POST['bundle']['offers'][$key]['coupon'] = $coupon;
 					
 					update_post_meta( $coupon, 'bundleid', $postid );
-					update_post_meta( $coupon, 'product_ids', $bundle['products'] );
-
 					update_post_meta( $coupon, 'discount_type', ( (isset($_POST['bundle']['offers'][$key]['discount-type']) && $_POST['bundle']['offers'][$key]['discount-type'] == 'amount') ? 'fixed_cart' : 'percent_product' ) );
 					update_post_meta( $coupon, 'coupon_amount', $_POST['bundle']['offers'][$key]['discount'] );
+					update_post_meta( $coupon, 'product_ids', $bundle['products'] );
+					update_post_meta( $coupon, 'minimum_amount', $bundle['offers'][$count]['value'] );
 				}
 			}
 		}
 		update_post_meta( $postid, 'bundle', $_POST['bundle'] );
-		$bundle = get_post_meta( $postid, 'bundle', true );
-
-		if( $coupon ) {
-			update_post_meta( $coupon, 'product_ids', $bundle['products'] );
-			update_post_meta( $coupon, 'sip_wc_bundle_coupon', 'yes' );
-		}
 	}
 }
 add_action( 'save_post', 'bundles_save_meta_box' );
@@ -729,34 +744,11 @@ function function_do_script_errors( $fields ) {
 }
 
 
-add_filter( 'woocommerce_coupon_is_valid', 'sip_coupon_is_valid' , 10, 2 );
+/**
+* Modify the coupon errors:
+*/
+add_filter( 'woocommerce_coupon_error', 'sip_coupon_error', 10, 2 );
 
-function sip_coupon_is_valid( $valid, $coupon ) {
-		global $woocommerce;
-
-		$product_ids = $coupon->product_ids;
-
-		if ( 'yes' == get_post_meta( $coupon->id, 'sip_wc_bundle_coupon', true ) ) {
-			foreach ( $woocommerce->cart->cart_contents as $key => $value ) {
-				if ( in_array( $value['product_id'], $product_ids ) ) {
-					$id_array_key = array_search( $value['product_id'], $product_ids );
-					unset( $product_ids[ $id_array_key ] );
-				}
-			}
-			
-			if ( ! empty( $product_ids ) ) {
-				return false;
-			}
-		}
-
-		return $valid;
-	}
-
-	/**
-  * Modify the coupon errors:
-  */
-	add_filter( 'woocommerce_coupon_error', 'wpq_coupon_error', 10, 2 );
-
-	function wpq_coupon_error( $err, $err_code ) {	
-    return ( '103' == $err_code ) ? '' : $err;
-	}
+function sip_coupon_error( $err, $err_code ) {	
+  return ( '103' == $err_code ) ? '' : $err;
+}

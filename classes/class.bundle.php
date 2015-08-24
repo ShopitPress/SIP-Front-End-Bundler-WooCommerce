@@ -29,7 +29,7 @@ class bundle {
 	 * @access   public		 
 	 */	
 	public function __construct( $bundleid ) {
-		$this->ID = $bundleid;
+		$this->ID 		= $bundleid;
 		$this->action = $_SERVER["REQUEST_URI"];
 	}
 	
@@ -72,21 +72,21 @@ class bundle {
 	 * @return 	 string var
 	 */
 	public function template() {
-		$fields = $this->get_fields();
+		$fields 	= $this->get_fields();
 		$template = "one";			
 		return $template;
 	}
 	
 	/**
-	 * to get the product list
+	 * to get the products list
 	 *		 		
 	 * @since    1.0.0
 	 * @access   public		 
 	 * @return 	 string var
 	 */
 	public function get_products() {
-		$fields = $this->get_fields();
 		
+		$fields 	= $this->get_fields();		
 		$products = ( isset($fields["products"]) ? $fields["products"] : array() );
 		$products = explode( ',', $products );
 		
@@ -94,7 +94,7 @@ class bundle {
 	}
 	
 	/**
-	 * count the number of product and return it
+	 * count the number of products and return it
 	 *		 		
 	 * @since    1.0.0
 	 * @access   public		 
@@ -119,7 +119,7 @@ class bundle {
 	}
 	
 	/**
-	 * To get the field withe the key 
+	 * To get the field with the key 
 	 *		 		
 	 * @since    1.0.0
 	 * @access   public		 
@@ -150,9 +150,9 @@ class bundle {
 	 */
 	public function script_offers() {
 		
-		$global_offers = get_offers($this->ID);
-		$prd_offers = get_offers($this->ID, 'product-quantity');
-		$tc_offers = get_offers($this->ID, 'total-cart');
+		$global_offers 	= get_offers($this->ID);
+		$prd_offers 		= get_offers($this->ID, 'product-quantity');
+		$tc_offers 			= get_offers($this->ID, 'total-cart');
 		
 		echo '<script>
 			
@@ -182,7 +182,7 @@ class bundle {
 		<input type="hidden" name="bundler[min-items]" id="woos-min-items-input" value="' . ( (!empty($this->get_field("min-items") && $this->get_field("min-items") > 0) ? $this->get_field("min-items") : -1) ) . '" />
 		<input type="hidden" name="bundler[max-items]" id="woos-max-items-input" value="' . ( (!empty($this->get_field("max-items") && $this->get_field("max-items") > 0) ? $this->get_field("max-items") : -1) ) . '" />
 		<input type="hidden" name="bundler[discount]" id="woos-discount-input" />
-		<input type="hidden" name="bundler[redirect]" value="' . (( $this->get_field("redirect") ) ? urlencode($this->get_checkout_url()) : "") . '" />
+		<input type="hidden" name="bundler[redirect]" value="' . (( $this->get_field("redirect") ) ? urlencode($this->get_checkout_url()) : urlencode($this->get_cart_url()) ) . '" />
 		';
 		wp_nonce_field('woobundler-add-to-cart', 'nonce');
 	}
@@ -208,14 +208,27 @@ class bundle {
 		global $woocommerce;
 		return $woocommerce->cart->get_checkout_url();
 	}
+
+	/**
+	 * Get the url of the cart out page 
+	 *		 		
+	 * @since    1.0.0
+	 * @access   private		 
+	 * @return 	 string url
+	 */
+	private function get_cart_url() {
+		global $woocommerce;
+		return $woocommerce->cart->get_cart_url();
+	}
 	
 	/**
-	 * number of produt to add in bundel 
+	 * number of produt to add in bundle 
 	 *		 		
 	 * @since    1.0.0
 	 * @access   public		 
 	 */
 	public function quantity_input() {
+		
 		$bundleqty = $this->get_field("allow-bundle-quantity");
 		
 		echo '<div class="woos-quantity" style="display: ' . ( ($bundleqty) ? "block" : "none" ) . '">';

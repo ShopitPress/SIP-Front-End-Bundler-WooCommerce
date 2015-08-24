@@ -17,7 +17,7 @@
  * Text Domain:       WB
  * Domain Path:       /languages
  * Requires:					PHP5, WooCommerce Plugin
- * Last updated on:		22-08-2015
+ * Last updated on:		24-08-2015
 */
 if(!function_exists('add_action'))
 	exit;
@@ -40,7 +40,11 @@ define( 'SIP_FEBWC_PLUGIN_PURCHASE_URL', 'https://shopitpress.com/plugins/sip-fr
 // register_deactivation_hook(__FILE__, array('WooBundler', 'plugin_deactivation'));
 
 		
-
+	//add CSS & JS scripts
+	add_action( 'wp_enqueue_scripts', 'sip_febwc_scripts' );
+	function sip_febwc_scripts() {		
+		wp_enqueue_script( 'sip_febwc-app', plugin_dir_url( __FILE__ ) .  'assets/js/app.js', array(), '1.0.0', true );
+	}
 
 /**
  * registers credit/affiliate link options

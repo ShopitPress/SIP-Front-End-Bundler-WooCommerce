@@ -1,0 +1,1 @@
+jQuery('.woocommerce-message').not(':last').remove();

@@ -89,14 +89,14 @@ jQuery(function($) {
 	
 	$("input[type=checkbox].woocheckbox").each( function(i, elem) {
 		$(this).removeClass('woocheckbox').hide().wrap('<span class="woocheckbox"></span>');
-		// $div = $(this).parent();
-		// $state = $(this).is(":checked");
+		$div = $(this).parent();
+		$state = $(this).is(":checked");
 		
-		// $class = "fa-square-o";
-		// if( $state == true )
-		// 	$class = "fa-check-square-o";
+		$class = "fa-square-o";
+		if( $state == true )
+			$class = "fa-check-square-o";
 		
-		// $div.append('<i class="fa '+$class+'"></i>');
+		$div.append('<i class="fa '+$class+'"></i>');
 	});
 	
 	$(".variation .woos-field label").on("click", function(e) {
@@ -117,7 +117,7 @@ jQuery(function($) {
 		if( ($(e.target).is("input") && $(e.target).is(":visible")) || ($(e.target).hasClass(".variation")) )
 			return;
 		
-		$divqty = $(this).find("");
+		$divqty = $(this).find(".woos-quantity");
 		$div = $divqty.find(".woocheckbox");
 		
 		$this = $div.find("i.fa");
