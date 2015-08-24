@@ -323,8 +323,8 @@ function bundles_callback_meta_box( $post, $type ) {
 				<div class="field">
 					<label>Display Variations</label>
 					<select name="bundle[display_vars]">
-						<option value="active"<?php echo ( (isset($bundle["display_vars"]) && $bundle["display_vars"] == 'active') ? " selected" : ( !isset($bundle["display_vars"]) || (isset($bundle["display_vars"]) && $bundle["display_vars"] != 'hover') ) ? " selected" : "" ); ?>>On Active</option>
-						<option value="hover"<?php echo ( (isset($bundle["display_vars"]) && $bundle["display_vars"] == 'hover') ? " selected" : "" ); ?>>On hover</option>
+						<option value="active" disabled <?php echo ( (isset($bundle["display_vars"]) && $bundle["display_vars"] == 'active') ? " selected" : ( !isset($bundle["display_vars"]) || (isset($bundle["display_vars"]) && $bundle["display_vars"] != 'hover') ) ? " selected" : "" ); ?>>On Active</option>
+						<option value="hover" disabled <?php echo ( (isset($bundle["display_vars"]) && $bundle["display_vars"] == 'hover') ? " selected" : "" ); ?>>On hover</option>
 					</select>
 				</div>
 			</div>
@@ -403,7 +403,7 @@ function bundles_callback_meta_box( $post, $type ) {
 		<?php case "setting": ?>
 			<div class="bundle-fields">
 				<div class="field" onclick="alert('This feature is available only in PRO version');">
-					<label>Define quantity of items per bundle</label>
+					<label>Define quantity of items per bundle (PRO)</label>
 					<label><input style="display: inline; width: 10%;" type="number" name="bundle[min-items]" value="1" disabled /> MIN</label>
 					<label><input style="display: inline; width: 10%;" type="number" name="bundle[max-items]" value="1" disabled/> MAX</label>
 				</div>
@@ -411,10 +411,10 @@ function bundles_callback_meta_box( $post, $type ) {
 					<label><input type="checkbox" name="bundle[display-product-prices]" <?php echo ( (isset($bundle["display-product-prices"])) ? "checked" : "" ); ?> /> Display Product Prices</label>
 				</div>
 				<div class="field" onclick="alert('This feature is available only in PRO version');">
-					<label><input disabled type="checkbox" name="bundle[allow-bundle-quantity]" /> Allow quantity input</label>
+					<label><input disabled type="checkbox" name="bundle[allow-bundle-quantity]" /> Allow quantity input (PRO)</label>
 				</div>
 				<div class="field" onclick="alert('This feature is available only in PRO version');">
-					<label><input disabled type="checkbox" name="bundle[allow-product-quantity]" /> Allow per product quantity input</label>
+					<label><input disabled type="checkbox" name="bundle[allow-product-quantity]" /> Allow per product quantity input (PRO)</label>
 				</div>
 				<div class="field">
 					<label><input type="checkbox" name="bundle[redirect]" <?php echo ( (isset($bundle["redirect"])) ? "checked" : "" ); ?> /> Redirect to checkout after selection</label>
@@ -482,7 +482,11 @@ function bundles_callback_meta_box( $post, $type ) {
 									<select id="type">
 										<?php
 											foreach($types as $key => $type) {
-												echo '<option value="'.$key.'">'.$type.'</option>';
+												if($key == 1 || $key == 2) {
+													echo '<option value="'.$key.'" disabled>'.$type.'</option>';
+												} else {
+													echo '<option value="'.$key.'">'.$type.'</option>';
+												}
 											}
 										?>
 									</select>
@@ -630,7 +634,7 @@ add_action( 'admin_print_styles', 'bundles_style_meta_box' );
  * @return 	 	 array string
  */
 function get_offer_types() {
-	return array( "Minimum amount", "Total qty. cart", "Product qty." );
+	return array( "Minimum amount", "Total qty. cart (PRO)", "Product qty. (PRO)" );
 }
 
 /**
