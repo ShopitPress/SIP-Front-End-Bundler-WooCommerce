@@ -7,7 +7,7 @@
 			<label><input  id="spc-febwc-affiliate-checkbox" type="checkbox" name="sip-febwc-affiliate-check-box" value="true" <?php echo esc_attr( get_option('sip-febwc-affiliate-check-box', false))?' checked="checked"':''; ?> /> Yes, I want to help development of this plugin</label><br />
 			<div id="spc-febwc-diplay-affiliate-toggle">
 
-				<label><input id="spc-febwc-discreet-credit" type="radio" name="sip-febwc-affiliate-radio[option_three]" value="value1"<?php checked( 'value1' == $options['option_three'] ); ?> checked/> Add a discreet credit</label><br />
+				<label><input id="spc-febwc-discreet-credit" type="radio" name="sip-febwc-affiliate-radio[option_three]" value="value1"<?php checked( 'value1' == $options['option_three'] ); ?> checked/> Add a credit</label><br />
 				<label><input id="spc-febwc-affiliate-link" 	type="radio" name="sip-febwc-affiliate-radio[option_three]" value="value2"<?php checked( 'value2' == $options['option_three'] ); ?> /> Add my affiliate link</label><br />
 				<div id="spc-febwc-affiliate-link-box">
 					<label><input type="text" name="sip-febwc-affiliate-affiliate-username" value="<?php echo esc_attr( get_option('sip-febwc-affiliate-affiliate-username')) ?>" /> Input affiliate username/ID</label><br />
