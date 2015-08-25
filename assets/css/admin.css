@@ -61,15 +61,7 @@
 	
     background-position: center;
 }
-.bundle-fields .field .templates .box.one {
-	background-image: url(../img/template1.png);
-}
-.bundle-fields .field .templates .box.two {
-	background-image: url(../img/template2.png);
-}
-.bundle-fields .field .templates .box.three {
-	background-image: url(../img/template3.png);
-}
+
 .bundle-fields .field .templates .box:hover,
 .bundle-fields .field .templates .box.active {
 	border: 5px solid #767676;
@@ -136,4 +128,59 @@
 	background: #DBDBDB;
 	padding: 2px 5px;
 	font-size: 0.7em;
+}
+
+.project{
+	position:relative;
+	text-align:center;
+	color:#fff;
+	overflow:hidden;
+	cursor:pointer;
+	width: 300px;
+}
+
+.project img{
+	width:100%;
+	height:auto;
+}
+
+.project .hover{
+	position:absolute;
+	width:100%;
+	left:0;
+	top:0;
+	background:#7E7E7E;
+	font-size:17px;
+	opacity:0;
+	filter: alpha(opacity=0);
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=0)";
+}
+
+.project:hover .hover{
+	height: 100%;
+	opacity:0.75;
+	color: #fff;
+	filter: alpha(opacity=75);
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=75);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=75)";
+}
+
+.hover .hover-inner h2{
+	color: #fff;
+	line-height: 1.5em;
+}
+
+.project .hover-inner{
+	position:relative;
+	top:0%;
+	transition: all 500ms ease-in-out 0s;
+	-webkit-transition:all 500ms ease-in-out 0s;
+	-moz-transition:all 500ms ease-in-out 0s;
+	-o-transition:all 500ms ease-in-out 0s;
+	-ms-transition:all 500ms ease-in-out 0s;
+}
+
+.project:hover .hover-inner{
+	top:20%;
 }

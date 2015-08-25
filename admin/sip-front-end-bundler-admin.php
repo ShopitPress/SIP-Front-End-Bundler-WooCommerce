@@ -58,7 +58,7 @@ class Sip_Front_End_Bundler_WC_Admin {
     $user_id = $current_user->ID;
 
     /* Check that the user hasn't already clicked to ignore the message */
-    if( ! class_exists( 'SIP_Front_End_Bundler_WC_Addon' ) ) {
+    if( ! class_exists( 'SIP_Front_End_Bundler_WC_Pro' ) ) {
       if ( ! get_user_meta($user_id, 'sip_febwc_ignore_notice') ) { ?>
         <div class="sip-container">
           <div style="padding: 0; margin: 0; border: none; background: none;">

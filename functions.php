@@ -312,11 +312,26 @@ function bundles_callback_meta_box( $post, $type ) {
 			<div class="bundle-fields">
 				<div class="field">
 					<div class="boxes templates">
-						<div class="box one<?php echo ( (isset($bundle["template"]) && $bundle["template"] == 'one') ? " active" : "" ); ?>" data-label="Template #1" data-value="one"></div>
-						
-						<div class="box two"  style="pointer-events: none;cursor: default;" data-label="Template #2" data-value="two"></div>
-						<div class="box three"  style="pointer-events: none;cursor: default;" data-label="Template #3" data-value="three"></div>
-						
+						<div class="box project one<?php echo ( (isset($bundle["template"]) && $bundle["template"] == 'one') ? " active" : "" ); ?>" data-label="Template #1" data-value="one">
+							<img src="<?php echo SIP_FEBWC_URL ?>assets/img/template1.png" alt=""/>
+				      
+						</div>						
+						<div class="box project two" style="cursor: default;" onclick="return false;" data-label="Template #2" data-value="two">
+							<img src="<?php echo SIP_FEBWC_URL ?>assets/img/template2.png" alt=""/>
+				      <div class="hover">
+				        <div class="hover-inner">
+				          <h2>This feature is available only in PRO</h2>
+				        </div>
+				      </div>
+						</div>
+						<div class="box project three" style="cursor: default;" onclick="return false;" data-label="Template #3" data-value="three">
+							<img src="<?php echo SIP_FEBWC_URL ?>assets/img/template3.png" alt=""/>
+				      <div class="hover">
+				        <div class="hover-inner">
+				          <h2>This feature is available only in PRO</h2>
+				        </div>
+				      </div>
+						</div>			
 						<input type="hidden" class="template-input" name="bundle[template]" value="<?php echo ( (isset($bundle["template"]) && !empty($bundle["template"])) ? $bundle["template"] : "" ); ?>" />
 					</div>
 				</div>
