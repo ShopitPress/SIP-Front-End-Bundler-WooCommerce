@@ -314,13 +314,13 @@ function bundles_callback_meta_box( $post, $type ) {
 					<div class="boxes templates">
 						<div class="box project one<?php echo ( (isset($bundle["template"]) && $bundle["template"] == 'one') ? " active" : "" ); ?>" data-label="Template #1" data-value="one">
 							<img src="<?php echo SIP_FEBWC_URL ?>assets/img/template1.png" alt=""/>
-				      
 						</div>						
-						<div class="box project two" style="cursor: default;" onclick="return false;" data-label="Template #2" data-value="two">
+						<div class="box project two" data-label="Template #2" data-value="two">
 							<img src="<?php echo SIP_FEBWC_URL ?>assets/img/template2.png" alt=""/>
 				      <div class="hover">
 				        <div class="hover-inner">
-				          <h2>This feature is available only in PRO</h2>
+				          <p class="sip-text">This feature is available only in PRO</p>
+				          <a class="sip_product_button" href="<?php echo SIP_FEBWC_PLUGIN_PURCHASE_URL. '?utm_source=wordpress.org&utm_medium=SIP-panel&utm_content=v'. SIP_FEBWC_VERSION .'&utm_campaign=' .SIP_FEBWC_UTM_CAMPAIGN; ?>" target="_blank" style="display: inline-block;">Go Pro</a>
 				        </div>
 				      </div>
 						</div>
@@ -328,12 +328,20 @@ function bundles_callback_meta_box( $post, $type ) {
 							<img src="<?php echo SIP_FEBWC_URL ?>assets/img/template3.png" alt=""/>
 				      <div class="hover">
 				        <div class="hover-inner">
-				          <h2>This feature is available only in PRO</h2>
+				          <p class="sip-text">This feature is available only in PRO</p>
+				          <a class="sip_product_button" href="<?php echo SIP_FEBWC_PLUGIN_PURCHASE_URL . '?utm_source=wordpress.org&utm_medium=SIP-panel&utm_content=v'. SIP_FEBWC_VERSION .'&utm_campaign=' .SIP_FEBWC_UTM_CAMPAIGN; ?>" target="_blank" style="display: inline-block;">Go Pro</a>
 				        </div>
 				      </div>
 						</div>			
 						<input type="hidden" class="template-input" name="bundle[template]" value="<?php echo ( (isset($bundle["template"]) && !empty($bundle["template"])) ? $bundle["template"] : "" ); ?>" />
 					</div>
+					<script type="text/javascript">
+						jQuery(document).ready(function($){
+							$('.sip_product_button').bind('click', function(){
+								window.open($(this).attr('href'));
+							});
+						});
+					</script>
 				</div>
 				<div class="field">
 					<label>Display Variations</label>
@@ -405,7 +413,8 @@ function bundles_callback_meta_box( $post, $type ) {
 								if( $product ) {
 									?>
 									<div class="sortitem" data-id="<?php echo $product->ID; ?>">
-										<span class="sorthandle" unselectable="on"> </span><?php echo $product->post_title; ?> <small><?php echo ( !$product_->is_type('variable') ? '$' . ( (get_post_meta( $product->ID, '_sale_price', true )) ? get_post_meta( $product->ID, '_sale_price', true ) : ( (get_post_meta( $product->ID, '_regular_price', true )) ? get_post_meta( $product->ID, '_regular_price', true ) : 0 ) ) : "variable product"); ?></small><br/>SKU: <?php echo get_post_meta($product->ID, '_sku', true); ?><span class="close">x</span></div>
+										<span class="sorthandle" unselectable="on"> </span><?php echo $product->post_title; ?> <small><?php echo ( !$product_->is_type('variable') ? '$' . ( (get_post_meta( $product->ID, '_sale_price', true )) ? get_post_meta( $product->ID, '_sale_price', true ) : ( (get_post_meta( $product->ID, '_regular_price', true )) ? get_post_meta( $product->ID, '_regular_price', true ) : 0 ) ) : "variable product"); ?></small><br/>SKU: <?php echo get_post_meta($product->ID, '_sku', true); ?><span class="close">x</span>
+									</div>
 									<?php
 								}
 							}
@@ -531,18 +540,16 @@ function bundles_callback_meta_box( $post, $type ) {
 								echo '<td data-id="#desc"><input type="text" value="'.( (isset($offers[$count]["desc"]) ? $offers[$count]["desc"] : "") ).'" name="bundle[offers]['.$count.'][desc]" /></td>';
 								echo '<td data-id="#type">' . ( (isset($offers[$count]["type"]) ? $types[$offers[$count]["type"]] : "") ) . ( (isset($offers[$count]["type-product"]) && !empty($offers[$count]["type-product"])) ? ' SKU: '.get_post_meta($offers[$count]["type-product"], '_sku', true) : "" ) . '<span class="product-id" style="display: none;">'.$offers[$count]["type-product"].'</span></td>';
 								echo '<td data-id="#value"><input type="text" value="'.( (isset($offers[$count]["value"]) ? $offers[$count]["value"] : "") ).'" name="bundle[offers]['.$count.'][value]" /></td>';
-								echo '<td data-id="#discount-type">'.( (isset($offers[$count]["discount-type"]) ? $offers[$count]["discount-type"] : "") ).'</td>';
+								echo '<td data-id="#discount-type"><select name="bundle[offers]['.$count.'][discount-type]" id="discount-type"><option '.( ($offers[$count]["discount-type"]=="amount" ? 'selected="selected"' : "") ).' value="amount">amount</option><option '.( ($offers[$count]["discount-type"]=="percent" ? 'selected="selected"' : "") ).' value="percent">percent</option></select></td>';
 								echo '<td data-id="#discount"><input type="text" value="'.( (isset($offers[$count]["discount"]) ? $offers[$count]["discount"] : "") ).'" name="bundle[offers]['.$count.'][discount]" /></td>';
-								echo '<td data-id="#coupon-name">'.( (isset($offers[$count]["coupon-name"]) ? $offers[$count]["coupon-name"] : "") ).'</td>';
+								echo '<td data-id="#coupon-name"><input type="text" value="'.( (isset($offers[$count]["coupon-name"]) ? $offers[$count]["coupon-name"] : "") ).'" name="bundle[offers]['.$count.'][coupon-name]" /></td>';
 								echo '<td data-id="#override" align="center"><input type="checkbox"' . ( (isset($offers[$count]["override"]) && $offers[$count]["override"] == "on") ? " checked" : "" ) . ' name="bundle[offers]['.$count.'][override]" /></td>';
 								echo '<td><a href="#" class="button removebtn">x</a></td>';
 								echo '</tr>';
-								
+
 								echo '<tr class="hidden">';
 								echo '<td><input type="hidden" value="'.( (isset($offers[$count]["id"]) ? $offers[$count]["id"] : "") ).'" name="bundle[offers]['.$count.'][id]" /></td>';
 								echo '<td><input type="hidden" value="'.( (isset($offers[$count]["type"]) ? $offers[$count]["type"] : "") ).'" name="bundle[offers]['.$count.'][type]" /><input type="hidden" value="'.( (isset($offers[$count]["type-product"]) ? $offers[$count]["type-product"] : "") ).'" name="bundle[offers]['.$count.'][type-product]" /></td>';
-								echo '<td><input type="hidden" value="'.( (isset($offers[$count]["coupon-name"]) ? $offers[$count]["coupon-name"] : "") ).'" name="bundle[offers]['.$count.'][coupon-name]" /></td>';
-								echo '<td><input type="hidden" value="'.( (isset($offers[$count]["discount-type"]) ? $offers[$count]["discount-type"] : "") ).'" name="bundle[offers]['.$count.'][discount-type]" /></td>';
 								echo '</tr>';
 								
 							};
@@ -578,7 +585,6 @@ function bundles_save_meta_box( $postid ) {
 	
 	if( isset($_POST['bundle']) ) {
 	
-
 		global $core;
 		update_post_meta( $postid, 'bundle', $_POST['bundle'] );
 		$bundle = get_post_meta( $postid, 'bundle', true );

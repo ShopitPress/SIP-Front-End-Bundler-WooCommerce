@@ -17,7 +17,7 @@
  * Text Domain:       WB
  * Domain Path:       /languages
  * Requires:					PHP5, WooCommerce Plugin
- * Last updated on:		24-08-2015
+ * Last updated on:		26-08-2015
 */
 if(!function_exists('add_action'))
 	exit;

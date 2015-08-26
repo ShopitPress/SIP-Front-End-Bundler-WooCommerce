@@ -4,7 +4,7 @@
 	<form method="post" action="options.php">
 	  <?php settings_fields( 'sip-febwc-affiliate-settings-group' ); ?>
 	  <?php $options = get_option('sip-febwc-affiliate-radio'); ?>
-			<label><input  id="spc-febwc-affiliate-checkbox" type="checkbox" name="sip-febwc-affiliate-check-box" value="true" <?php echo esc_attr( get_option('sip-febwc-affiliate-check-box', false))?' checked="checked"':''; ?> /> Yes, I want to help development of this plugin</label><br />
+			<label><input id="spc-febwc-affiliate-checkbox" type="checkbox" name="sip-febwc-affiliate-check-box" value="true" <?php echo esc_attr( get_option('sip-febwc-affiliate-check-box', false))?' checked="checked"':''; ?> /> Yes, I want to help development of this plugin</label><br />
 			<div id="spc-febwc-diplay-affiliate-toggle">
 
 				<label><input id="spc-febwc-discreet-credit" type="radio" name="sip-febwc-affiliate-radio[option_three]" value="value1"<?php checked( 'value1' == $options['option_three'] ); ?> checked/> Add a credit</label><br />
@@ -12,9 +12,8 @@
 				<div id="spc-febwc-affiliate-link-box">
 					<label><input type="text" name="sip-febwc-affiliate-affiliate-username" value="<?php echo esc_attr( get_option('sip-febwc-affiliate-affiliate-username')) ?>" /> Input affiliate username/ID</label><br />
 				</div>
-            <p class="sip-text">Make money recommending our plugins. Register for an affiliate account at <a href="https://shopitpress.com/?affiliate-area/utm_source=wordpress.org&amp;utm_medium=affiliate&amp;utm_campaign=sip-front-end-bundler-woocommerce" target="_blank">Shopitpress</a>.
-            </p>
-					</a>
+				<p class="sip-text">Make money recommending our plugins. Register for an affiliate account at <a href="https://shopitpress.com/affiliate-area/?utm_source=wordpress.org&amp;utm_medium=affiliate&amp;utm_campaign=sip-front-end-bundler-woocommerce" target="_blank">Shopitpress</a>.</p>
+					
 			</div>
 		<?php submit_button(); ?>
 	</form>

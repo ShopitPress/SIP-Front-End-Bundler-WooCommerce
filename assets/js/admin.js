@@ -122,7 +122,7 @@ jQuery(function($) {
 						+'<td data-id="#value"><input type="text" name="bundle[offers]['+offerCount+'][value]" /></td>'
 						+'<td data-id="#discount-type"></select>'
 						+'<td data-id="#discount"><input type="text" name="bundle[offers]['+offerCount+'][discount]" /></td>'
-						+'<td data-id="#coupon-name"></td>'
+						+'<td data-id="#coupon-name"><input type="text" name="bundle[offers]['+offerCount+'][coupon-name]" /></td>'
 						+'<td data-id="#override" align="center"><input type="checkbox" name="bundle[offers]['+offerCount+'][override]" /></td>'
 						+'<td><a href="#" class="button removebtn">x</a></td>'
 						+'</tr>';

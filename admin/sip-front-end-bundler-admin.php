@@ -59,24 +59,23 @@ class Sip_Front_End_Bundler_WC_Admin {
 
     /* Check that the user hasn't already clicked to ignore the message */
     if( ! class_exists( 'SIP_Front_End_Bundler_WC_Pro' ) ) {
-      if ( ! get_user_meta($user_id, 'sip_febwc_ignore_notice') ) { ?>
-        <div class="sip-container">
-          <div style="padding: 0; margin: 0; border: none; background: none;">
-            <div  class="sip-notification-message">
-              <div class="icon">
-                <img title="" src="<?php echo SIP_FEBWC_URL . "admin/assets/images/icon-front-end-bundler.png" ?>" alt="" />
-              </div>            
-              <div class="text"><?php
-                _e( 'It\'s time to upgrade your', 'front-end-bundler' ); ?> <strong><?php echo $plugin_info['Name']; ?> plugin</strong> <?php _e( 'to', 'front-end-bundler' ); ?> <strong>PRO</strong> <?php _e( 'version!', 'front-end-bundler' ); ?><br />
-                <span><?php _e( 'Extend standard plugin functionality with new great options.', 'front-end-bundler' ); ?></span>
-                <?php printf(__('| <a href="%1$s">Dismiss this notice</a>'), 'admin.php?page=sip-bundler-settings&sip_febwc_nag_ignore=0'); ?>              
-              </div>
-              <div class="button_div">
-                <a class="button" target="_blank" href="https://shopitpress.com/plugins/<?php echo SIP_FEBWC_PLUGIN_SLUG ; ?>/?utm_source=wordpress.org&amp;utm_medium=SIP-panel&amp;utm_content=v<?php echo SIP_FEBWC_VERSION; ?>&amp;utm_campaign=<?php echo SIP_FEBWC_UTM_CAMPAIGN ; ?>"><?php _e( 'Learn More', 'front-end-bundler' ); ?></a>
-              </div>
+      if ( !get_user_meta($user_id, 'sip_febwc_ignore_notice') ) { ?>
+
+        <div style="padding: 0; margin: 0; border: none; background: none; width:98%">
+          <div  class="sip-notification-message">
+            <div class="icon">
+              <img title="" src="<?php echo SIP_FEBWC_URL . "admin/assets/images/icon-front-end-bundler.png" ?>" alt="" />
+            </div>            
+            <div class="title">Do you want even more Front End Bundles? <b>Do you want even more</b>?<br />
+              <span class="subbtitle">Extend standard plugin functionality with advanced sales stats, customers count and animated counters. </span>
+              <span class="dismiss"><?php printf(__('<a href="%1$s">Dismiss</a>'), 'admin.php?page=sip-bundler-settings&sip_febwc_nag_ignore=0'); ?></span>
+            </div>
+            <div class="button_div">
+              <a class="button" target="_blank" href="https://shopitpress.com/plugins/<?php echo SIP_FEBWC_PLUGIN_SLUG ; ?>/?utm_source=wordpress.org&amp;utm_medium=banner&amp;utm_content=v<?php echo SIP_FEBWC_VERSION; ?>&amp;utm_campaign=<?php echo SIP_FEBWC_UTM_CAMPAIGN ; ?>"><?php _e( 'Learn More', 'front-end-bundler' ); ?></a>
             </div>
           </div>
         </div>
+
       <?php
       }
     }
@@ -264,12 +263,17 @@ class Sip_Front_End_Bundler_WC_Admin {
       <h2 class="nav-tab-wrapper">
         <a class="nav-tab<?php if ( !isset( $_GET['action'] ) ) echo ' nav-tab-active'; ?>" href="admin.php?page=sip-bundler-settings"><?php _e( 'Settings', 'front-end-bundler' ); ?></a>
         <a class="nav-tab<?php if ( isset( $_GET['action'] ) && 'help' == $_GET['action'] ) echo ' nav-tab-active'; ?>" href="admin.php?page=sip-bundler-settings&amp;action=help"><?php _e( 'Help', 'front-end-bundler' ); ?></a>
+        <?php if( ! class_exists( 'SIP_Social_Proof_WC_Pro' ) ) { ?>
+          <a class="nav-tab sip-nav-premium<?php if ( isset( $_GET['action'] ) && 'addon' == $_GET['action'] ) echo ' nav-tab-active'; ?>" href="admin.php?page=sip-bundler-settings&amp;action=addon"><?php _e( 'Add On', 'front-end-bundler' ); ?></a>
+        <?php } ?>
       </h2>
       <?php
         if ( !isset( $_GET['action'] ) ) { 
             include("ui/settings.php");
           } elseif ( 'help' == $_GET['action'] ) { 
             include("ui/help.php");
+          }elseif ( 'addon' == $_GET['action'] ) { 
+            include("ui/addon.php");
           } 
       ?>
       <?php include('ui/affiliate.php'); ?>
