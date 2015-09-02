@@ -3,5 +3,5 @@ Plugin Name: 	SIP Front End Bundler for WooCommerce
 Author: 	ShopitPress.com
 
 
-1.0.0 - 08/26/2014
+1.0.0 - 08/28/2014
 - Initial release

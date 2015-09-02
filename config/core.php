@@ -1,6 +1,6 @@
 <?php
 /**
- * xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ * Core plugin class which initializes custom post type
  *
  *
  * @link       https://shopitpress.com
@@ -9,10 +9,11 @@
  * @subpackage Sip_Front_End_Bundler_Woocommerce/config/
  * @author     shopitpress <hello@shopitpress.com>
  */
+
 class Core {
 
 	/**
-	 * xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+	 * a variable to store post type name
 	 *
 	 * @since    1.0.0
 	 * @access   public
@@ -28,7 +29,9 @@ class Core {
 	 */
 	public function __construct() {
 		
-		require_once( SIP_FEBWC_DIR . 'config/require.php' );
+		//require_once( SIP_FEBWC_DIR . 'config/require.php' );
+		require_once( SIP_FEBWC_DIR . 'classes/woobundler.php' );
+		require_once( SIP_FEBWC_DIR . 'functions.php' );
 		
 		$this->posttype = "sip-bundles";
 	}

@@ -8,7 +8,7 @@
  * @subpackage  Sip_Front_End_Bundler_Woocommerce/admin
  */
 
-define( 'SIP_FEBWC_UTM_CAMPAIGN', 'front-end-bundler' );
+define( 'SIP_FEBWC_UTM_CAMPAIGN', 'sip-front-end-bundler-woocommerce' );
 define( 'SIP_FEBWC_ADMIN_VERSION' , '1.0.1' );
 if ( ! defined( 'SIP_PANEL' ) ) {
   define( 'SIP_PANEL' , TRUE);

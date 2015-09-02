@@ -1,8 +1,8 @@
 ﻿=== SIP Front End Bundler for WooCommerce ===
 Contributors: (shopitpress, fransanchezoria, arslan104, hafizusman)
 Tags: SIP Front End Bundler WooCommerce, bundler, woocommerce, product bundler
-Requires at least: 4.1
-Tested up to: 4.3
+Requires at least: 3.8 or higher
+Tested up to: 4.2.4
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

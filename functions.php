@@ -96,6 +96,7 @@ function sip_febwc_loaded_function() {
 								}
 							}
 
+							// bundle offers setup
 							foreach( $offers as $offer ) {
 								if( $offer["type"] == '0' ) {
 									if( $total_amount > intval($offer["minimum"]) && $discounts["minimum"] < $offer["discount"] ) {
@@ -320,7 +321,7 @@ function bundles_callback_meta_box( $post, $type ) {
 				      <div class="hover">
 				        <div class="hover-inner">
 				          <p class="sip-text">This feature is available only in PRO</p>
-				          <a class="sip_product_button" href="<?php echo SIP_FEBWC_PLUGIN_PURCHASE_URL. '?utm_source=wordpress.org&utm_medium=SIP-panel&utm_content=v'. SIP_FEBWC_VERSION .'&utm_campaign=' .SIP_FEBWC_UTM_CAMPAIGN; ?>" target="_blank" style="display: inline-block;">Go Pro</a>
+				          <a class="sip_product_button" href="<?php echo SIP_FEBWC_PLUGIN_PURCHASE_URL. '?utm_source=wordpress.org&utm_medium=banner&utm_content=v'. SIP_FEBWC_VERSION .'&utm_campaign=' .SIP_FEBWC_UTM_CAMPAIGN; ?>" target="_blank" style="display: inline-block;">Go Pro</a>
 				        </div>
 				      </div>
 						</div>
@@ -329,7 +330,7 @@ function bundles_callback_meta_box( $post, $type ) {
 				      <div class="hover">
 				        <div class="hover-inner">
 				          <p class="sip-text">This feature is available only in PRO</p>
-				          <a class="sip_product_button" href="<?php echo SIP_FEBWC_PLUGIN_PURCHASE_URL . '?utm_source=wordpress.org&utm_medium=SIP-panel&utm_content=v'. SIP_FEBWC_VERSION .'&utm_campaign=' .SIP_FEBWC_UTM_CAMPAIGN; ?>" target="_blank" style="display: inline-block;">Go Pro</a>
+				          <a class="sip_product_button" href="<?php echo SIP_FEBWC_PLUGIN_PURCHASE_URL . '?utm_source=wordpress.org&utm_medium=banner&utm_content=v'. SIP_FEBWC_VERSION .'&utm_campaign=' .SIP_FEBWC_UTM_CAMPAIGN; ?>" target="_blank" style="display: inline-block;">Go Pro</a>
 				        </div>
 				      </div>
 						</div>			
@@ -620,6 +621,7 @@ function bundles_save_meta_box( $postid ) {
 					$_POST['bundle']['offers'][$key]['coupon'] = $coupon;
 					
 					update_post_meta( $coupon, 'bundleid', $postid );
+					update_post_meta( $coupon, 'front_end_bundler_delete', $postid );
 					update_post_meta( $coupon, 'discount_type', ( (isset($_POST['bundle']['offers'][$key]['discount-type']) && $_POST['bundle']['offers'][$key]['discount-type'] == 'amount') ? 'fixed_cart' : 'percent_product' ) );
 					update_post_meta( $coupon, 'coupon_amount', $_POST['bundle']['offers'][$key]['discount'] );
 					update_post_meta( $coupon, 'product_ids', $bundle['products'] );
@@ -631,6 +633,43 @@ function bundles_save_meta_box( $postid ) {
 	}
 }
 add_action( 'save_post', 'bundles_save_meta_box' );
+
+
+
+function front_end_bundler_deactivation() {	
+	global $wpdb;
+
+	$bundler_deactivations = $wpdb->get_results( 
+	  $wpdb->prepare("SELECT post_id, meta_value FROM $wpdb->postmeta where meta_key = %s", 'front_end_bundler_delete')
+	);
+
+
+	if( count($bundler_deactivations) > 0 ){
+		foreach ($bundler_deactivations as $bundler_deactivation) {
+		  wp_trash_post( $bundler_deactivation->post_id );
+			wp_trash_post( $bundler_deactivation->meta_value );
+		}
+	}
+
+
+
+
+}
+
+function trash_coupon( $post_id ) {
+	global $wpdb;
+
+	$coupon_ids = $wpdb->get_results( 
+	  $wpdb->prepare("SELECT post_id FROM $wpdb->postmeta where meta_key = %s AND meta_value= %s ", 'front_end_bundler_delete' ,$post_id)
+	);
+
+	if( count($coupon_ids) > 0 ){
+		foreach ($coupon_ids as $coupon_id) {
+		   wp_trash_post( $coupon_id->post_id );
+		}
+	}
+}
+add_action( 'trashed_post', 'trash_coupon' );
 
 /**
  * load the css and javascript for meta box
