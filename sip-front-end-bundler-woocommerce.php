@@ -42,6 +42,10 @@ function sip_febwc_scripts() {
 	wp_enqueue_script( 'sip_febwc-app', plugin_dir_url( __FILE__ ) .  'assets/js/app.js', array(), '1.0.0', true );
 }
 
+function deactivate_febwc_lite_version(){
+  deactivate_plugins(plugin_basename( __FILE__ ));
+}
+
 /**
  * Register credit/affiliate link options
  *
@@ -57,9 +61,12 @@ function sip_febwc_affiliate_register_admin_settings() {
 
 // on plugin deactivation, delete the SIP version
 register_deactivation_hook( __FILE__, array( 'Sip_Front_End_Bundler_WC_Admin' , 'sip_febwc_deactivate') );
-register_deactivation_hook( __FILE__ , 'front_end_bundler_deactivation' );
 
 // load core plugin class and admin functions
+if (!class_exists('WP_List_Table')) {
+	require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
+}
+
 require_once( SIP_FEBWC_DIR . 'config/core.php' );
 require_once( SIP_FEBWC_DIR . 'admin/sip-front-end-bundler-admin.php' );
 

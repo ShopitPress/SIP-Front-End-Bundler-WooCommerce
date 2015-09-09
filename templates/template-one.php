@@ -117,12 +117,10 @@
 					echo '</h1>';
 					echo '</div>';
 					
-					echo ($bundler->get_field("description")) ? '<hr /><p>' . $bundler->get_field("description") . '</p>' : "<p></p>";
-					
 					$bundler->quantity_input();
 					$bundler->bundle_price();
 					$bundler->hidden_inputs();
-
+					$bundler->bundle_description();
 					$bundler->submit_html();
 					?>
 				</div>

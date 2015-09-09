@@ -4,7 +4,7 @@ jQuery(function($) {
 	var discountedprice = 0;
 	var old_amount, old_discount;
 	var globalqty = 0;
-	
+	var sip_currency_symbol = document.getElementById("sip_currency_symbol");
 	var discount = {
 		minimum: {
 			percent: 0,
@@ -27,7 +27,7 @@ jQuery(function($) {
 	};
 	
 	$err = [];
-	
+
 	var olddesc = $(".woos-total p").text();
 	var old_offers = offers;
 
@@ -489,9 +489,11 @@ jQuery(function($) {
 		$discounted_price = $("#woos-discounted-price");
 		$total_price = $("#woos-total-price");
 		$description = $(".woos-total p");
+		$sip_currency_symbol = $(".sip_currency_symbol");
+
 		amount = amount > 0 ? amount : 0;
 		discount.price = amount;
-		
+
 		var newDiscount_ = [ discount.minimum.percent, discount.quantity.percent, discount.products.percent ];
 		var newFixed_ = [ discount.minimum.fixed, discount.quantity.fixed, discount.products.fixed ];
 		
@@ -532,14 +534,14 @@ jQuery(function($) {
 		
 		if( newDiscount > 0 ) {
 			if( amount > 0 ) {
-				$discounted_price.text( "$" + discountedprice.toFixed(2) );
-				$total_price.text( "$" + amount.toFixed(2) );
+				$discounted_price.text( sip_currency_symbol.innerHTML + discountedprice.toFixed(2) );
+				$total_price.text( sip_currency_symbol.innerHTML + amount.toFixed(2) );
 			} else {
-				$discounted_price.text( "$0.00" );
-				$total_price.text( "$0.00" );
+				$discounted_price.text( sip_currency_symbol.innerHTML + "0.00" );
+				$total_price.text( sip_currency_symbol.innerHTML + "0.00" );
 			}
 		} else {
-			$discounted_price.text( "$" + amount.toFixed(2) );
+			$discounted_price.text( sip_currency_symbol.innerHTML + amount.toFixed(2) );
 			$total_price.text("");
 		}
 		

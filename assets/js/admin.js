@@ -19,8 +19,13 @@ jQuery(function($) {
 		$products = $("#products");
 		$field = $("#add-product input[type=text]");
 		
-		$html = '<div class="sortitem" data-id="'+ui.item.value+'"><span class="sorthandle" unselectable="on"> </span>'+ui.item.desc+'<br/>SKU: ' + ui.item.label + '<span class="close">x</span></div>';-
-		$($html).appendTo($products);
+		
+		if(ui.item.var_pro == "variable_product")
+			alert("This feature is available only in PRO version");
+		else{
+			$html = '<div class="sortitem" data-id="'+ui.item.value+'"><span class="sorthandle" unselectable="on"> </span>'+ui.item.desc+'<br/>SKU: ' + ui.item.label + '<span class="close">x</span></div>';-
+			$($html).appendTo($products);
+		}
 		
 		$products.vSort();
 		fillInput();
@@ -136,6 +141,10 @@ jQuery(function($) {
 						+'</tr>';
 				append($offer);
 				offerCount++;
+				jQuery( '#css' ).val('');
+				jQuery( '#value' ).val('');
+				jQuery( '#discount' ).val('');
+				jQuery( '#coupon-name' ).val('');
 			}
 		});
 	});

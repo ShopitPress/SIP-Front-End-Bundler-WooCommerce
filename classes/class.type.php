@@ -68,7 +68,7 @@ class Type {
 			)
 		);
 		
-		$arguments = array_merge( $arguments, $this->extras );
+	 	$arguments = array_merge( $arguments, $this->extras );
 		
 		if (!post_type_exists( $this->slug ))
 			register_post_type($this->slug, $arguments);

@@ -31,6 +31,7 @@ class Core {
 		
 		//require_once( SIP_FEBWC_DIR . 'config/require.php' );
 		require_once( SIP_FEBWC_DIR . 'classes/woobundler.php' );
+		require_once( SIP_FEBWC_DIR . 'classes/class.post_tab.php' );
 		require_once( SIP_FEBWC_DIR . 'functions.php' );
 		
 		$this->posttype = "sip-bundles";

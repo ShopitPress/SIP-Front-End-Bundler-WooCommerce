@@ -46,24 +46,23 @@
     display: inline-block;
     width: 25%;
 }
+
 .bundle-fields .field .templates .box {
-    width: 33%;
-    cursor: pointer;
-    height: 220px;
-    display: inline-block;
-    background-image: none;
-	
-    background-color: #FFF;
-    background-size: 100% auto;
-    border: 5px solid #FFF;
-    box-sizing: border-box;
+  width: 33%;
+  height: 220px;
+  display: inline-block;
+  background-image: none;
+	cursor: pointer;	
+  background-color: #FFF;
+  background-size: 100% auto;
+  border: 5px solid #FFF;
+  box-sizing: border-box;
 	background-repeat: no-repeat;
-	
-    background-position: center;
+  background-position: center;
 }
 
-.bundle-fields .field .templates .box:hover,
-.bundle-fields .field .templates .box.active {
+.bundle-fields .field .templates .one.box:hover,
+.bundle-fields .field .templates .one.box.active {
 	border: 5px solid #767676;
 }
 .bundle-fields .field .templates .box::before {
@@ -92,7 +91,7 @@
 .sortitem{
 	padding: 5px;
 	border: 1px solid #ccc;
-	padding-left:20px;
+	padding-left: 20px;
 	border-radius: 5px;
 	margin-bottom: 5px;
 }

@@ -73,7 +73,8 @@ class bundle {
 	 */
 	public function template() {
 		$fields 	= $this->get_fields();
-		$template = "one";			
+			$template = "one";
+
 		return $template;
 	}
 	
@@ -194,7 +195,7 @@ class bundle {
 	 * @access   public		 
 	 */
 	public function submit_html() {
-		echo '<a href="javascript:void(0);" class="woos-addcart">' . (( !empty($this->get_field("addcart")) ) ? $this->get_field("addcart") : "Add To Cart") . '</a>';
+		echo '<a href="javascript:void(0);" class="woos-addcart"><span class="fa fa-shopping-cart"></span> ' . (( !empty($this->get_field("addcart")) ) ? $this->get_field("addcart") : "Add To Cart") . '</a>';
 	}
 	
 	/**
@@ -254,8 +255,20 @@ class bundle {
 	 * @access   public		 
 	 */
 	public function bundle_price() {
+		echo '<div id="sip_currency_symbol" style="display:none;">' . get_woocommerce_currency_symbol() . '</div>';
 		echo '<div class="woos-price">';
 		echo '<del id="woos-total-price"></del> <ins id="woos-discounted-price">' . get_woocommerce_currency_symbol() . '0.00</ins>';
+		echo '</div>';
+	}
+	/**
+	 * show the discount price
+	 *		 		
+	 * @since    1.0.0
+	 * @access   public		 
+	 */
+	public function bundle_description() {
+		echo '<div class="woos-description">';
+		echo '<h3>'. $this->get_field("description") .'</h3>';
 		echo '</div>';
 	}
 	
@@ -280,6 +293,6 @@ class bundle {
 		$this->bundle_price();
 		$this->hidden_inputs();
 
-		echo '<a href="javascript:void(0);" class="woos-addcart" onclick="javascript:document.getElementById(\'woobundler-form\').submit(); return false;">' . (( !empty($this->get_field("addcart")) ) ? $this->get_field("addcart") : "Add To Cart") . '</a>';
+		echo '<a href="javascript:void(0);" class="woos-addcart" onclick="javascript:document.getElementById(\'woobundler-form\').submit(); return false;"><span class="fa fa-shopping-cart"></span> ' . (( !empty($this->get_field("addcart")) ) ? $this->get_field("addcart") : "Add To Cart") . '</a>';
 	}
 }

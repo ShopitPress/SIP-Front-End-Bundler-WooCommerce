@@ -1,4 +1,9 @@
 /*ShopitPress Extras*/
+
+#sip-wraper{
+  padding-top: 30px;
+}
+
 .sip-addon {
 	border: 1px solid #ccc;
 	background: #fff;

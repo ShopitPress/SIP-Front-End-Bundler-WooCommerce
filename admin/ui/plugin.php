@@ -20,6 +20,12 @@
       'title'     => SIP_RSWC_PLUGIN,
       'desc'      => __( 'Display product reviews in any post/page with a shortcode.', 'front-end-bundler' ),
     ),
+    '4' => (object) array(
+      'image_url' => $src_image . 'icon-cookie-check .png',
+      'url'       => SIP_CCWC_PLUGIN_URL . '?utm_source=wordpress.org&utm_medium=SIP-panel&utm_content=v'. SIP_FEBWC_VERSION .'&utm_campaign=' .SIP_FEBWC_UTM_CAMPAIGN,
+      'title'     => SIP_CCWC_PLUGIN,
+      'desc'      => __( 'Encourage visitors to enable cookies so you don’t lose sales.', 'front-end-bundler' ),
+    ),
 	);
 ?>
 
