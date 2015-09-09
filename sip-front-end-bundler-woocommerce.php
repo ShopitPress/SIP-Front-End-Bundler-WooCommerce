@@ -7,7 +7,7 @@
  *
  * Plugin Name:				SIP Front End Bundler for WooCommerce
  * Plugin URI:				https://shopitpress.com/plugins/sip-front-end-bundler-woocommerce/
- * Description:				WooCommerce add-on: For having bundled products with custom bundle offers
+ * Description:				Front end bundle maker for WooCommerce with real-time offers
  * Version:           1.0.0
  * Author:            ShopitPress <hello@shopitpress.com>
  * Author URI:        https://shopitpress.com
@@ -17,7 +17,7 @@
  * Text Domain:       WB
  * Domain Path:       /languages
  * Requires:					PHP5, WooCommerce Plugin
- * Last updated on:		28-08-2015
+ * Last updated on:		09-09-2015
 */
 if(!function_exists('add_action'))
 	exit;
@@ -50,7 +50,7 @@ function deactivate_febwc_lite_version(){
  * Register credit/affiliate link options
  *
  * @since  1.0.1
- * 
+ *
  */
 add_action( 'admin_init', 'sip_febwc_affiliate_register_admin_settings' );
 function sip_febwc_affiliate_register_admin_settings() {
